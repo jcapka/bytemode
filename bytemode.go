@@ -6,13 +6,14 @@ import (
 )
 
 func main() {
-	c := 500000
-	bytes := make([]byte, c)
-	_, err := rand.Read(bytes)
-	if err != nil {
-		fmt.Println("error:", err)
-		return
-	}
+	
+	bytes, _ := generateBytes(500000)
+	b, c := getByte(bytes)
+	fmt.Println("The byte", b, "was seen", c, "times")
+}
+
+func getByte(bytes []byte) (byte, int){
+	
 
 	maxSeenCount := 0
 	maxSeen := -1
@@ -32,10 +33,16 @@ func main() {
 			maxSeenCount = count
 		}
 	}
-
-	for key, value := range counts {
-    	fmt.Println("Key:", key, "Value:", value)
-	}
-	
-	fmt.Println("The byte", bytes[maxSeen], "was seen", counts[bytes[maxSeen]], "times")
+	return bytes[maxSeen], counts[bytes[maxSeen]]
 }
+
+func generateBytes(length int) ([]byte, error) {
+	
+	bytes := make([]byte, length)
+	_, err := rand.Read(bytes)
+	if err != nil {
+		return nil, err
+	}
+	return bytes, nil
+}
+
