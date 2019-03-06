@@ -1,0 +1,11 @@
+steps:
+- name: 'gcr.io/cloud-builders/go'
+  args: ['install', '.']
+  env: ['PROJECT_ROOT=bytemode']
+- name: 'gcr.io/cloud-builders/go'
+  args: ['build', 'bytemode']
+  env: ['PROJECT_ROOT=bytemode']
+artifacts:
+  objects:
+    location: 'gs://jcapka-cbtest/'
+    paths: ['bytemode']
